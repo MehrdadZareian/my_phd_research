@@ -309,16 +309,28 @@ def rollout(cat, st: LadderState, future) -> float:
 class LadderLookAhead(LadderRule):
     name = "look-ahead"
 
-    def __init__(self, n_scenarios: int = 8, top_k: int = 2):
-        self.n_scenarios, self.top_k = n_scenarios, top_k
+    def __init__(self, n_scenarios: int = 8, top_k: int = 2, supply: str = "source"):
+        self.n_scenarios, self.top_k, self.supply = n_scenarios, top_k, supply
+        if supply == "observed":
+            self.name = "look-ahead (learned supply)"
+
+    def reset(self, cat, buffer_size, rng):
+        super().reset(cat, buffer_size, rng)
+        self.seen: list[int] = []
+
+    def _scenario(self, n):
+        if self.supply == "observed" and len(self.seen) >= 5:
+            pool = np.array(self.seen)
+            return pool[self.rng.integers(0, len(pool), n)]
+        return self.rng.integers(0, len(self.cat.problem.pieces), n)
 
     def act(self, st, remaining):
-        cat, pr = self.cat, self.cat.problem
+        cat = self.cat
         st = st.copy()
+        self.seen.append(st.hand[-1])
         acts = []
         while len(st.hand) > self.B:
-            scen = [self.rng.integers(0, len(pr.pieces), remaining)
-                    for _ in range(self.n_scenarios)]
+            scen = [self._scenario(remaining) for _ in range(self.n_scenarios)]
             best, best_val = None, np.inf
             for p in st.hand:
                 cands = candidate_actions(cat, st, p)

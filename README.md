@@ -158,6 +158,41 @@ Caveats:
 Run it with `python experiments/run_ladder.py` (~8 min on 2 cores), then
 `python experiments/make_ladder_figures.py`. Results go to `results/ladder/`.
 
+### Adversarial tests (`experiments/run_adversarial.py`)
+
+Three kinds of adversary, on the open-geometry ladder:
+- **Bad orders** of the same batch: long pieces first, short first, best class
+  first, best class last.
+- **A search adversary.** For each batch and each strategy separately, it
+  rearranges the arrival order (25 swap or reversal steps) to maximise that
+  strategy's new timber, knowing the strategy and its random seed.
+- **Misleading supply.** The batch is mostly short pieces, while look-ahead
+  still assumes the source statistics. A variant that learns the supply from
+  the pieces it has seen is added.
+
+| Test (m of new timber) | Greedy rule | Buffered rule | Look-ahead | Offline optimum |
+|---|---|---|---|---|
+| Random order | 1.82 | 1.06 | **0.55** | 0.12 |
+| Long pieces first | 1.50 | 1.15 | **1.08** | 0.12 |
+| Short pieces first | 2.83 | 1.34 | **0.65** | 0.12 |
+| Best class first | 2.56 | 1.82 | **0.97** | 0.12 |
+| Worst order found by search | 4.68 | 3.00 | **1.10** | 0.12 |
+| Misleading supply | 11.72 | 9.31 | **8.97** (learned supply: 9.19) | 5.48 |
+
+![adversarial](results/adversarial/fig_adversarial.png)
+
+- **Look-ahead is the most robust strategy to bad orders.** The search
+  adversary adds 2.3 m to the greedy rule, 1.7 m to the buffered rule and only
+  0.44 m to look-ahead. The adversary is weak (25 steps), so these are not true
+  worst cases.
+- **Its advantage depends on the supply model.** Orders that break the
+  "random arrivals" assumption (long first) and misleading supply shrink the
+  advantage to about the level of the buffered rule. It never did worse than
+  the rules, though.
+- **Under misleading supply, everyone is far from the optimum** (about 9 m
+  against 5.5 m). Learning the supply from pieces seen so far did not help.
+  This is the case where human knowledge about supply (RQ3) would matter.
+
 ### Run it
 
 Requirements: Python ≥ 3.10, numpy, scipy, matplotlib, pandas, and pytest for

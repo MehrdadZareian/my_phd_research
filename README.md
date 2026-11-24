@@ -266,3 +266,29 @@ Results:
 is a weak lever. Storage and stronger planning are stronger levers. Human input
 may matter more in other forms: specific upcoming pieces ("a 3 m beam arrives
 tomorrow"), permission to wait, or answering minimal requests (RQ4).
+
+### Fixed window of 5 pieces (`experiments/run_window.py`)
+
+Unlimited storage would make the problem offline, so this is a fairer protocol.
+The workshop holds exactly 5 pieces. The first 5 fill the window, and at every
+step one of the 5 must be used or discarded before the next piece takes its
+place. All strategies follow the same protocol. 60 batches per case.
+
+| New timber (m) | Window rule | Window look-ahead | Clairvoyant, same window | Offline optimum |
+|---|---|---|---|---|
+| Random order | 1.68 | **0.81** | 0.55 | 0.14 |
+| Batch order | 1.77 | **0.93** | 0.75 | 0.03 |
+| Misleading supply | 8.58 | **8.18** | 7.65 | 5.23 |
+
+- **Normal supply (random or batch order):** look-ahead halves the new timber of
+  the window rule (−0.87 ± 0.25 m and −0.84 ± 0.25 m; better in 41 and 39
+  streams, worse in 5 and 7). It closes about 80 % of the gap between the rule
+  and a strategy that knows the whole future but has the same window.
+- **Misleading supply:** look-ahead gains only 0.40 ± 0.29 m. Knowing the exact
+  future would give 0.94 m.
+- The gap to the offline optimum is mostly the price of the 5-piece window
+  itself, not of missing information.
+- **Caveats:** the clairvoyant reference is a rollout, not the true optimum
+  within the window, so the real gap to perfect knowledge is probably larger.
+  The last 4 pieces at the end of the stream are assigned optimally for every
+  strategy.

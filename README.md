@@ -223,3 +223,46 @@ experiments/              experiment runner and figures
 results/                  CSV, summary, figures (synthetic)
 tests/                    unit and integration tests
 ```
+
+### Human supply hints (`experiments/run_hints.py`, `run_hint_bounds.py`)
+
+A hint is a coarse statement a person could make: *"about h of the coming pieces
+are shorter than 1 m"*. Look-ahead uses it as its supply prior, optionally
+revised from the pieces that actually arrive. Setup: misleading supply (the
+true short share is about 0.8, the source statistics say 0.34), 40 batches.
+Two reference strategies show how much information can help at all.
+
+| Misleading supply (m of new timber) | Mean | Gain vs no hint |
+|---|---|---|
+| Look-ahead, no hint | 8.62 | — |
+| Hint correct (85 %) | 8.30 | +0.32 ± 0.27 |
+| Hint vague (70 %) / exaggerated (95 %) | 8.39 / 8.40 | +0.23 / +0.22 (not significant) |
+| Hint wrong ("mostly long") | 9.00 | −0.38 ± 0.27 |
+| Hint wrong, revised from arrivals | 8.63 | −0.01 (harm removed) |
+| Perfect supply model (true distribution) | 8.36 | +0.26 |
+| Clairvoyant (sees the actual future, buffer 3) | 7.94 | +0.68 |
+| Look-ahead, no hint, **buffer 8** | **7.61** | **+1.01 ± 0.35** |
+| Offline optimum | 5.31 | +3.31 |
+
+![hints](results/hints/fig_hints.png)
+
+Results:
+- **Hints about the supply distribution help only a little.** A correct hint
+  closes about 10 % of the gap to the offline optimum, and that is already the
+  most a perfect supply model achieves. Knowing the distribution is not the
+  bottleneck.
+- **A wrong hint costs about as much as a correct one gains.** Revising the hint
+  from arriving pieces removes the harm, but it also dilutes the benefit of a
+  correct hint.
+- **With normal supply, a wrong "mostly short" hint costs little** (−0.13 ±
+  0.20 m), and nothing once it is revised from arrivals.
+- **Even perfect knowledge of the future recovers only about 20 % of the gap**
+  while the system still builds online with 3 pieces of storage. **More storage
+  (8 pieces) recovers about 30 %, more than any information does.** The rest
+  comes from building online itself (irreversible commits and build order) and
+  from the limits of this planner. The planner part can't be separated out yet.
+
+**Implication:** in this model, human knowledge about the supply *distribution*
+is a weak lever. Storage and stronger planning are stronger levers. Human input
+may matter more in other forms: specific upcoming pieces ("a 3 m beam arrives
+tomorrow"), permission to wait, or answering minimal requests (RQ4).

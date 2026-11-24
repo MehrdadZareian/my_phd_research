@@ -309,16 +309,40 @@ def rollout(cat, st: LadderState, future) -> float:
 class LadderLookAhead(LadderRule):
     name = "look-ahead"
 
-    def __init__(self, n_scenarios: int = 8, top_k: int = 2, supply: str = "source"):
+    def __init__(self, n_scenarios: int = 8, top_k: int = 2, supply: str = "source",
+                 hint_short_share: float | None = None, hint_update: bool = False,
+                 short_threshold: float = 1.0, hint_strength: float = 10.0, name: str | None = None):
+        """supply: "source" (source statistics), "observed" (bootstrap from seen
+        pieces), or "hint": a person's coarse statement "a share h of the
+        coming pieces is shorter than short_threshold". With hint_update the
+        share is revised from the pieces that arrive (Beta prior with
+        hint_strength pseudo-pieces); lengths within each bin follow the
+        source statistics."""
         self.n_scenarios, self.top_k, self.supply = n_scenarios, top_k, supply
+        self.h, self.h_update, self.thr, self.k0 = hint_short_share, hint_update, short_threshold, hint_strength
         if supply == "observed":
             self.name = "look-ahead (learned supply)"
+        if name:
+            self.name = name
 
     def reset(self, cat, buffer_size, rng):
         super().reset(cat, buffer_size, rng)
         self.seen: list[int] = []
 
     def _scenario(self, n):
+        if self.supply == "hint":
+            if not hasattr(self, "_bins"):
+                L = np.array([p.length for p in self.cat.problem.pieces])
+                self._bins = (np.flatnonzero(L < self.thr), np.flatnonzero(L >= self.thr))
+            short, long_ = self._bins
+            h = self.h
+            if self.h_update:
+                n_short = sum(self.cat.problem.pieces[i].length < self.thr for i in self.seen)
+                h = (self.k0 * self.h + n_short) / (self.k0 + len(self.seen))
+            is_short = self.rng.random(n) < h
+            out = long_[self.rng.integers(0, len(long_), n)]
+            out[is_short] = short[self.rng.integers(0, len(short), is_short.sum())]
+            return out
         if self.supply == "observed" and len(self.seen) >= 5:
             pool = np.array(self.seen)
             return pool[self.rng.integers(0, len(pool), n)]

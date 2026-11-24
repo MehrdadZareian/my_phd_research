@@ -64,6 +64,9 @@ class FrameModel:
                  box: float = 0.25, step: float = 0.05, top_load: float = 6.0,
                  side_load: float = 2.0, n_samples: int = 300, margin: float = 1.05, seed: int = 0):
         self.n, self.open = n, open_geometry
+        # "waste": new timber (m) + WASTE_WEIGHT * offcut;  "cuts": one unit per cut,
+        # where every new-timber member also counts as one cut (+ 0.05 per m as tie-break).
+        self.objective = "waste"
         N = n + 1
         self.nodes = [(i, j) for j in range(N) for i in range(N)]
         nid = {ij: k for k, ij in enumerate(self.nodes)}
@@ -284,11 +287,16 @@ def completion(fm, st, extra=()) -> tuple[float, list]:
     P = np.array(list(st.hand) + list(extra), dtype=int)
     new = L + 2 * ALLOW
     if len(P) == 0:
-        return float(new.sum()), []
+        return float(new.sum() if fm.objective != "cuts" else len(new) + WASTE_WEIGHT * new.sum()), []
     V = fm.valid_matrix(P, L, mem)
     W = fm.Lp[P, None] - (L + 2 * ALLOW)[None, :]
-    C = np.where(V, WASTE_WEIGHT * W, _BIG).T
-    C = np.hstack([C, np.tile(new[:, None], (1, len(mem)))])
+    if fm.objective == "cuts":
+        C = np.where(V, (W > CUT_TOL) + 0.001 * W, _BIG).T
+        newc = 1.0 + WASTE_WEIGHT * new
+    else:
+        C = np.where(V, WASTE_WEIGHT * W, _BIG).T
+        newc = new
+    C = np.hstack([C, np.tile(newc[:, None], (1, len(mem)))])
     r, c = linear_sum_assignment(C)
     pairs = [(int(P[cc]), int(mem[rr])) for rr, cc in zip(r, c) if cc < len(P)]
     return float(C[r, c].sum()), pairs
@@ -383,6 +391,111 @@ class FrameLookAhead(FrameWindowRule):
         return acts
 
 
+# --- Node-first: choose a node position from the whole window ------------------------
+
+def _max_matching(fit):
+    """Maximum bipartite matching on a small boolean matrix (boards x members)."""
+    nb, nm = fit.shape
+    match_m = [-1] * nm
+
+    def try_board(i, seen):
+        for j in np.flatnonzero(fit[i]):
+            if not seen[j]:
+                seen[j] = True
+                if match_m[j] < 0 or try_board(match_m[j], seen):
+                    match_m[j] = i
+                    return True
+        return False
+
+    for i in range(nb):
+        try_board(i, [False] * nm)
+    return [(match_m[j], j) for j in range(nm) if match_m[j] >= 0]
+
+
+def node_first_options(fm, st, tol=CUT_TOL, max_per_node=3):
+    """For every unplaced node with placed neighbours: the candidate position
+    where the most boards in the window fit its members WITHOUT a cut.
+    Returns list of (n_boards, waste, shift, action)."""
+    hand = np.array(st.hand, dtype=int)
+    if len(hand) == 0:
+        return []
+    out = []
+    for v in np.flatnonzero(st.ci < 0):
+        nb = []
+        for m in fm.incident[v]:
+            if st.built[m]:
+                continue
+            a, b = fm.members[m]
+            u = b if a == v else a
+            if st.ci[u] >= 0:
+                nb.append((m, u, a == v))
+        if not nb:
+            continue
+        d = np.array([fm.D[m][:, st.ci[u]] if v_is_a else fm.D[m][st.ci[u], :] for m, u, v_is_a in nb])
+        ms = np.array([m for m, _, _ in nb])
+        w = fm.Lp[hand][:, None, None] - (d + 2 * ALLOW)[None]           # (H, n_nb, K)
+        fit = (w >= 0) & (w <= tol) & (fm.q[hand] > 0)[:, None, None]
+        fit &= (fm.tcap[hand][:, None] >= fm.dt[ms][None, :])[:, :, None]
+        if not fit.any():
+            continue
+        cc = fm.ccap(hand[:, None, None], d[None])
+        fit &= cc >= fm.dc[ms][None, :, None]
+        n_any = fit.any(axis=0).sum(axis=0)                               # members with a fitting board
+        for c in np.flatnonzero(n_any >= max(1, n_any.max())):
+            pairs = _max_matching(fit[:, :, c])[:max_per_node]
+            if not pairs:
+                continue
+            waste = float(sum(w[i, j, c] for i, j in pairs))
+            shift = float(np.hypot(*(fm.cands[v][c] - fm.nominal[v])))
+            act = ("node", int(v), int(c), [(int(hand[i]), int(ms[j])) for i, j in pairs])
+            out.append((len(pairs), waste, shift, act))
+    out.sort(key=lambda o: (-o[0], o[1], o[2]))
+    return out
+
+
+def apply_node(fm, st, act) -> list:
+    _, v, c, pairs = act
+    st.ci[v] = c
+    _update_lengths(fm, st, v)
+    wastes = []
+    for p, m in pairs:
+        wastes.append(apply(fm, st, ("place", p, m, -1, -1)))
+    return wastes
+
+
+class FrameNodeFirst(FrameWindowRule):
+    """Decide node positions from the whole window: place the node where the
+    most boards fit its members without cutting. Order of preference:
+      1. a node position that fits >= 2 boards without cuts,
+      2. a board that fits an existing member without a cut,
+      3. a node position that fits 1 board without a cut,
+      4. the tightest placement with a cut, 5. discard."""
+    name = "node-first rule"
+
+    def act(self, st, remaining):
+        fm = self.fm
+        st = st.copy()
+        acts = []
+        while len(st.hand) > self.B:
+            nodes = node_first_options(fm, st)
+            exact = [o for p in st.hand for o in options(fm, st, p)
+                     if o[1][3] < 0 and o[2] <= CUT_TOL]
+            if nodes and nodes[0][0] >= 2:
+                a = nodes[0][3]
+            elif exact:
+                a = min(exact, key=lambda o: o[2])[1]
+            elif nodes:
+                a = nodes[0][3]
+            else:
+                a = self.best_or_discard(st)
+            acts.append(a)
+            if a[0] == "node":
+                apply_node(fm, st, a)
+            else:
+                apply(fm, st, a)
+        return acts
+
+
 # --- Episode, offline plan, verification --------------------------------------------
 
 @dataclass
@@ -394,6 +507,7 @@ class FrameResult:
     cuts: int
     violations: int
     max_node_shift_m: float
+    new_members: int = 0
 
 
 def finish(fm, st, name, waste, cuts, return_state=False):
@@ -416,7 +530,8 @@ def finish(fm, st, name, waste, cuts, return_state=False):
         if F[m] < 0 and fm.ccap(np.array([p]), np.array([L[m]]))[0] < -F[m] - 1e-6:
             viol += 1
     shift = float(np.max(np.hypot(*(fm.positions(ci) - fm.nominal).T)))
-    res = FrameResult(name, new_m, 1 - new_m / need.sum(), float(waste), int(cuts), viol, shift)
+    res = FrameResult(name, new_m, 1 - new_m / need.sum(), float(waste), int(cuts), viol, shift,
+                      fm.M - len(filled))
     if return_state:
         return res, dict(pos=fm.positions(ci), placed=placed, lengths=L, forces=F)
     return res
@@ -433,9 +548,15 @@ def run_frame_episode(fm, stream, policy, B, seed=0, return_state=False):
             break
         st.hand.append(p)
         for a in policy.act(st.copy(), len(stream) - t - 1):
-            w = apply(fm, st, a)
-            waste += w
-            cuts += int(a[0] == "place" and w > CUT_TOL)
+            if a[0] == "node":
+                ws = apply_node(fm, st, a)
+            elif a[0] == "place":
+                ws = [apply(fm, st, a)]
+            else:
+                apply(fm, st, a)
+                ws = []
+            waste += sum(ws)
+            cuts += sum(int(w > CUT_TOL) for w in ws)
         assert len(st.hand) <= B
     return finish(fm, st, policy.name, waste, cuts, return_state)
 

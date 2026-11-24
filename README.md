@@ -418,3 +418,39 @@ Node freedom: fixed, ±5, ±10, ±15 cm.
   variant samples from exactly these 80 boards, which is an optimistic supply
   model; the learned-supply variant is the honest one. No quality grades, and
   the loads and capacities are placeholders.
+
+### Node-first: deciding node positions from the 5-board window (`experiments/run_node_first.py`)
+
+So far, each node was placed by one board: the first board connected to it
+fixed its position, and the node's other members then needed cuts. The
+**node-first rule** looks at all 5 boards in the window and puts the node
+where the most boards fit its members **without a cut** (with two neighbours
+placed, two boards can define the node, like a triangle closing). Order of
+preference: a node position that fits ≥ 2 boards; a board that fits an
+existing member exactly; a node position that fits 1 board; the tightest
+placement with a cut; discard.
+
+Objective: number of cuts, where every new-timber member counts as one cut.
+Real inventory, 2 × 2 m panel, 40 random orders.
+
+| Node freedom | Strategy | Total cuts | Cuts on reclaimed boards | New-timber members | Reclaimed share |
+|---|---|---|---|---|---|
+| ±5 cm | one board per node | 34.5 | 12.8 | 21.7 | 58 % |
+| ±5 cm | **node-first** | **29.6** | **7.8** | 21.9 | 58 % |
+| ±5 cm | offline plan | 23.7 | 4.1 | 19.6 | 62 % |
+| ±10 cm | one board per node | 31.8 | 11.3 | 20.4 | 59 % |
+| ±10 cm | **node-first** | **28.1** | **7.7** | 20.5 | 59 % |
+| ±10 cm | offline plan | 19.8 | 4.1 | 15.7 | 68 % |
+| ±15 cm | one board per node | 31.6 | 13.0 | 18.5 | 61 % |
+| ±15 cm | **node-first** | **26.9** | **7.7** | 19.2 | 60 % |
+| ±15 cm | offline plan | 18.0 | 4.1 | 13.9 | 71 % |
+
+- **Node-first cuts about 40 % fewer reclaimed boards** (about 13 → 8; −5.1 ±
+  0.8 at ±5 cm, lower in 39 of 40 orders), and the reclaimed share stays the
+  same (no significant difference).
+- **The remaining gap to the offline plan is mostly the number of new-timber
+  members** (about 20 against 14–16): with all boards known, the plan shapes
+  the geometry so that more boards can be used at all. Closing it needs
+  planning over several nodes ahead (look-ahead with node-first as the base),
+  which I haven't built yet.
+- Node-first is fast (about 0.1 s per panel) and had 0 structural violations.

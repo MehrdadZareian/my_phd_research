@@ -23,6 +23,8 @@ from .structure import Slot, capacities
 
 # Cost of 1 m of offcut relative to 1 m of new timber in a slot.
 WASTE_WEIGHT = 0.05
+# A piece needs a cut if it is longer than the slot by more than this (m).
+CUT_TOL = 0.02
 _BIG = 1e6
 
 
@@ -42,7 +44,10 @@ class Problem:
         return float(self.new_cost.sum())
 
 
-def build_problem(pieces: list[Piece], slots: list[Slot]) -> Problem:
+def build_problem(pieces: list[Piece], slots: list[Slot],
+                  cut_cost: float | None = None) -> Problem:
+    """Objective per placement: WASTE_WEIGHT * offcut length (default), or,
+    with ``cut_cost``, cut_cost per cut (+ a tiny offcut tie-break)."""
     P, S = len(pieces), len(slots)
     valid = np.zeros((P, S), dtype=bool)
     waste = np.zeros((P, S))
@@ -58,9 +63,15 @@ def build_problem(pieces: list[Piece], slots: list[Slot]) -> Problem:
                 waste[i, j] = pc.length - sl.required_length
                 util[i, j] = u
     new_cost = np.array([s.required_length for s in slots])
-    cost = np.where(valid, WASTE_WEIGHT * waste, _BIG)
-    # Tight fit: little offcut and little unused structural capacity.
-    fit = np.where(valid, waste + 0.5 * (1.0 - util), np.inf)
+    if cut_cost is None:
+        cost = np.where(valid, WASTE_WEIGHT * waste, _BIG)
+        # Tight fit: little offcut and little unused structural capacity.
+        fit = np.where(valid, waste + 0.5 * (1.0 - util), np.inf)
+    else:
+        cut = waste > CUT_TOL
+        cost = np.where(valid, cut_cost * cut + 0.001 * waste, _BIG)
+        # Rule: prefer fits without a cut, then little offcut and unused capacity.
+        fit = np.where(valid, 1.0 * cut + 0.1 * waste + 0.5 * (1.0 - util), np.inf)
     return Problem(slots, pieces, valid, waste, util, new_cost, cost, fit)
 
 

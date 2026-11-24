@@ -1,0 +1,361 @@
+objective,stream,policy,new_timber_m,cuts,waste_m,panels,reclaimed_share
+offcut length,0,offline optimum,0.0,22,11.189421927394813,6,1.0
+offcut length,0,window rule,1.748528137423857,21,19.086980853448626,6,0.9130671426209869
+offcut length,0,window look-ahead,1.0219544457292888,22,19.26540716175405,6,0.9491907403850391
+"cuts, 0.1 m per cut",0,offline optimum,0.0,21,12.373421927394812,6,1.0
+"cuts, 0.1 m per cut",0,window rule,1.648528137423857,24,18.48827193907059,7,0.9234746759000168
+"cuts, 0.1 m per cut",0,window look-ahead,0.8810249675906654,22,20.759935299177922,6,0.9562203815373799
+"cuts, 0.3 m per cut",0,offline optimum,0.0,21,12.373421927394812,6,1.0
+"cuts, 0.3 m per cut",0,window rule,1.648528137423857,24,18.48827193907059,7,0.9234746759000168
+"cuts, 0.3 m per cut",0,window look-ahead,0.8810249675906654,22,22.664935299177916,6,0.9562203815373799
+offcut length,1,offline optimum,0.0,20,11.01,5,1.0
+offcut length,1,window rule,0.0,25,18.51196431183233,6,1.0
+offcut length,1,window look-ahead,0.0,21,13.899999999999997,5,1.0
+"cuts, 0.1 m per cut",1,offline optimum,0.0,20,11.009999999999996,5,1.0
+"cuts, 0.1 m per cut",1,window rule,0.0,28,20.93723220583917,7,1.0
+"cuts, 0.1 m per cut",1,window look-ahead,0.0,21,15.601,5,1.0
+"cuts, 0.3 m per cut",1,offline optimum,0.0,20,11.01,5,1.0
+"cuts, 0.3 m per cut",1,window rule,0.0,28,20.93723220583917,7,1.0
+"cuts, 0.3 m per cut",1,window look-ahead,0.0,21,16.490999999999996,5,1.0
+offcut length,2,offline optimum,1.7000000000000002,21,12.47078987454454,7,0.9210961512976164
+offcut length,2,window rule,4.881024967590665,22,25.82822638479988,7,0.773531731907521
+offcut length,2,window look-ahead,5.321110255092798,18,27.678889744907202,6,0.7358230562314618
+"cuts, 0.1 m per cut",2,offline optimum,1.7000000000000002,21,12.470789874544543,7,0.9210961512976164
+"cuts, 0.1 m per cut",2,window rule,4.448528137423857,25,23.945920587112152,8,0.8066076583842089
+"cuts, 0.1 m per cut",2,window look-ahead,4.548528137423857,19,26.948492449256182,6,0.7737054695827505
+"cuts, 0.3 m per cut",2,offline optimum,2.7,16,9.53,5,0.8556149732620321
+"cuts, 0.3 m per cut",2,window rule,4.448528137423857,25,23.945920587112152,8,0.8066076583842089
+"cuts, 0.3 m per cut",2,window look-ahead,4.448528137423857,19,26.83036160748334,6,0.7788800420354702
+offcut length,3,offline optimum,0.0,23,8.957910331587247,6,1.0
+offcut length,3,window rule,0.6,27,17.47420141720922,7,0.9721613878728917
+offcut length,3,window look-ahead,0.0,19,15.076,5,1.0
+"cuts, 0.1 m per cut",3,offline optimum,0.0,17,10.179999999999998,5,1.0
+"cuts, 0.1 m per cut",3,window rule,0.9,27,17.319201417209214,7,0.9582420818093377
+"cuts, 0.1 m per cut",3,window look-ahead,0.0,24,16.270833470059486,6,1.0
+"cuts, 0.3 m per cut",3,offline optimum,0.0,17,10.179999999999998,5,1.0
+"cuts, 0.3 m per cut",3,window rule,0.9,27,17.319201417209214,7,0.9582420818093377
+"cuts, 0.3 m per cut",3,window look-ahead,0.0,20,14.111,5,1.0
+offcut length,4,offline optimum,0.0,19,8.296,5,1.0
+offcut length,4,window rule,0.5,22,17.106452716024766,6,0.9751411328424222
+offcut length,4,window look-ahead,0.0,19,13.411999999999999,5,1.0
+"cuts, 0.1 m per cut",4,offline optimum,0.0,16,8.357,5,1.0
+"cuts, 0.1 m per cut",4,window rule,0.0,27,19.960743801646736,7,1.0
+"cuts, 0.1 m per cut",4,window look-ahead,0.0,23,17.0317794898144,6,1.0
+"cuts, 0.3 m per cut",4,offline optimum,0.0,16,8.357,5,1.0
+"cuts, 0.3 m per cut",4,window rule,0.0,27,19.960743801646736,7,1.0
+"cuts, 0.3 m per cut",4,window look-ahead,0.0,19,13.625,5,1.0
+offcut length,5,offline optimum,0.0,19,8.391,5,1.0
+offcut length,5,window rule,0.5,23,17.003910331587246,6,0.9751541556294687
+offcut length,5,window look-ahead,0.0,23,18.28591033158725,6,1.0
+"cuts, 0.1 m per cut",5,offline optimum,0.0,19,8.390999999999998,5,1.0
+"cuts, 0.1 m per cut",5,window rule,0.8,19,18.47645271602477,6,0.9602258125478755
+"cuts, 0.1 m per cut",5,window look-ahead,0.0,19,12.315,5,1.0
+"cuts, 0.3 m per cut",5,offline optimum,0.0,19,8.390999999999998,5,1.0
+"cuts, 0.3 m per cut",5,window rule,0.8,19,18.47645271602477,6,0.9602258125478755
+"cuts, 0.3 m per cut",5,window look-ahead,0.9,18,20.751000000000005,5,0.9518716577540107
+offcut length,6,offline optimum,0.0,19,8.447999999999999,5,1.0
+offcut length,6,window rule,0.5,27,18.68274380164674,7,0.9767898034729425
+offcut length,6,window look-ahead,0.0,23,16.284779489814408,6,1.0
+"cuts, 0.1 m per cut",6,offline optimum,0.0,18,8.447999999999999,5,1.0
+"cuts, 0.1 m per cut",6,window rule,0.0,26,16.385743801646736,7,1.0
+"cuts, 0.1 m per cut",6,window look-ahead,0.0,24,17.560041173360094,6,1.0
+"cuts, 0.3 m per cut",6,offline optimum,0.0,18,8.447999999999999,5,1.0
+"cuts, 0.3 m per cut",6,window rule,0.0,26,16.385743801646736,7,1.0
+"cuts, 0.3 m per cut",6,window look-ahead,0.0,20,16.299,5,1.0
+offcut length,7,offline optimum,0.5,23,16.529779489814405,6,0.9751765203966882
+offcut length,7,window rule,3.1219544457292887,20,30.657995619089377,6,0.8447249159988941
+offcut length,7,window look-ahead,2.321954445729289,22,28.28599561908938,6,0.884514115156112
+"cuts, 0.1 m per cut",7,offline optimum,0.5,23,16.52977948981441,6,0.9751765203966882
+"cuts, 0.1 m per cut",7,window rule,1.8219544457292889,25,29.29777510890378,7,0.9154474066114905
+"cuts, 0.1 m per cut",7,window look-ahead,1.6,19,23.061,5,0.9144385026737968
+"cuts, 0.3 m per cut",7,offline optimum,1.4,19,15.413999999999998,5,0.9251336898395722
+"cuts, 0.3 m per cut",7,window rule,1.8219544457292889,25,29.29777510890378,7,0.9154474066114905
+"cuts, 0.3 m per cut",7,window look-ahead,1.6,19,23.060999999999996,5,0.9144385026737968
+offcut length,8,offline optimum,0.5,23,13.036779489814403,6,0.9751765203966882
+offcut length,8,window rule,2.2,22,23.80291033158725,6,0.8906782847696623
+offcut length,8,window look-ahead,3.7,20,20.612887450304573,6,0.8158664638286759
+"cuts, 0.1 m per cut",8,offline optimum,0.9,19,12.009999999999996,5,0.9518716577540107
+"cuts, 0.1 m per cut",8,window rule,2.1,22,17.210833470059487,6,0.8956167304374029
+"cuts, 0.1 m per cut",8,window look-ahead,1.2999999999999998,23,20.174041173360088,6,0.9353425513695208
+"cuts, 0.3 m per cut",8,offline optimum,0.9,19,12.01,5,0.9518716577540107
+"cuts, 0.3 m per cut",8,window rule,2.1,22,17.210833470059487,6,0.8956167304374029
+"cuts, 0.3 m per cut",8,window look-ahead,2.5,22,21.727910331587246,6,0.8757707781473435
+offcut length,9,offline optimum,0.0,23,10.710779489814405,6,1.0
+offcut length,9,window rule,0.0,28,21.23733225898206,7,1.0
+offcut length,9,window look-ahead,0.9,18,23.799000000000007,5,0.9518716577540107
+"cuts, 0.1 m per cut",9,offline optimum,0.0,22,11.133779489814406,6,1.0
+"cuts, 0.1 m per cut",9,window rule,0.948528137423857,27,21.005271939070596,7,0.9559689510378971
+"cuts, 0.1 m per cut",9,window look-ahead,0.8810249675906654,23,19.874066140950756,6,0.9561809026275668
+"cuts, 0.3 m per cut",9,offline optimum,0.9,17,8.912999999999998,5,0.9518716577540107
+"cuts, 0.3 m per cut",9,window rule,0.948528137423857,27,21.005271939070596,7,0.9559689510378971
+"cuts, 0.3 m per cut",9,window look-ahead,0.9,19,24.471999999999994,5,0.9518716577540107
+offcut length,10,offline optimum,0.5,22,17.562779489814403,6,0.9751765203966882
+offcut length,10,window rule,3.8211102550927976,20,38.79656297111755,6,0.8100230555483798
+offcut length,10,window look-ahead,0.9,20,31.977,5,0.9518716577540107
+"cuts, 0.1 m per cut",10,offline optimum,0.5,20,17.5627794898144,6,0.9751765203966882
+"cuts, 0.1 m per cut",10,window rule,4.543064700822087,23,38.06575452222373,7,0.7893443679888057
+"cuts, 0.1 m per cut",10,window look-ahead,0.9,19,37.289,5,0.9518716577540107
+"cuts, 0.3 m per cut",10,offline optimum,0.9,18,13.585,5,0.9518716577540107
+"cuts, 0.3 m per cut",10,window rule,4.543064700822087,23,38.06575452222373,7,0.7893443679888057
+"cuts, 0.3 m per cut",10,window look-ahead,0.9,19,37.289,5,0.9518716577540107
+offcut length,11,offline optimum,0.0,20,10.376999999999999,5,1.0
+offcut length,11,window rule,1.4,22,20.648506696269855,6,0.9303118312227391
+offcut length,11,window look-ahead,0.0,19,17.354,5,1.0
+"cuts, 0.1 m per cut",11,offline optimum,0.0,18,10.377,5,1.0
+"cuts, 0.1 m per cut",11,window rule,2.4810249675906655,23,23.7297687692374,7,0.8848298458273688
+"cuts, 0.1 m per cut",11,window look-ahead,0.0,19,19.482999999999997,5,1.0
+"cuts, 0.3 m per cut",11,offline optimum,0.0,18,10.376999999999999,5,1.0
+"cuts, 0.3 m per cut",11,window rule,2.4810249675906655,23,23.7297687692374,7,0.8848298458273688
+"cuts, 0.3 m per cut",11,window look-ahead,0.0,19,18.726,5,1.0
+offcut length,12,offline optimum,1.0,26,9.907558979628806,7,0.9536703313717408
+offcut length,12,window rule,5.629553105014523,21,23.98975452222374,7,0.7388017577675717
+offcut length,12,window look-ahead,3.8000000000000003,17,21.194999999999997,5,0.7967914438502673
+"cuts, 0.1 m per cut",12,offline optimum,1.3,21,9.63891033158725,6,0.9354008046366187
+"cuts, 0.1 m per cut",12,window rule,3.997056274847714,23,18.002669234721605,7,0.8146111075182101
+"cuts, 0.1 m per cut",12,window look-ahead,2.7,18,20.40599999999999,5,0.8556149732620321
+"cuts, 0.3 m per cut",12,offline optimum,1.8,18,7.946999999999999,5,0.9037433155080213
+"cuts, 0.3 m per cut",12,window rule,3.997056274847714,23,18.002669234721605,7,0.8146111075182101
+"cuts, 0.3 m per cut",12,window look-ahead,2.7,22,19.292779489814396,6,0.8659532101421165
+offcut length,13,offline optimum,0.0,20,12.049,5,1.0
+offcut length,13,window rule,1.2,27,22.71474380164674,7,0.9442955283350623
+offcut length,13,window look-ahead,0.9,24,21.444421927394806,6,0.9552474326321834
+"cuts, 0.1 m per cut",13,offline optimum,0.0,20,12.049000000000001,5,1.0
+"cuts, 0.1 m per cut",13,window rule,2.348528137423857,30,23.46297456735724,8,0.8977947793683931
+"cuts, 0.1 m per cut",13,window look-ahead,0.0,25,21.48442192739481,6,1.0
+"cuts, 0.3 m per cut",13,offline optimum,0.0,20,12.049000000000003,5,1.0
+"cuts, 0.3 m per cut",13,window rule,2.348528137423857,30,23.46297456735724,8,0.8977947793683931
+"cuts, 0.3 m per cut",13,window look-ahead,0.0,25,21.247964311832327,6,1.0
+offcut length,14,offline optimum,0.0,22,8.435779489814406,6,1.0
+offcut length,14,window rule,0.5,28,21.70133225898206,7,0.9767816245872403
+offcut length,14,window look-ahead,0.0,24,19.49591033158725,6,1.0
+"cuts, 0.1 m per cut",14,offline optimum,0.0,18,8.648,5,1.0
+"cuts, 0.1 m per cut",14,window rule,2.4696383925166545,24,25.22538219416339,7,0.8853584151178446
+"cuts, 0.1 m per cut",14,window look-ahead,0.0,24,17.79683347005949,6,1.0
+"cuts, 0.3 m per cut",14,offline optimum,0.0,18,8.648,5,1.0
+"cuts, 0.3 m per cut",14,window rule,2.4696383925166545,24,25.22538219416339,7,0.8853584151178446
+"cuts, 0.3 m per cut",14,window look-ahead,0.0,24,17.796833470059486,6,1.0
+offcut length,15,offline optimum,0.0,19,8.997,5,1.0
+offcut length,15,window rule,1.5810249675906654,23,22.164989279422997,6,0.9213421810727744
+offcut length,15,window look-ahead,0.0,19,13.592,5,1.0
+"cuts, 0.1 m per cut",15,offline optimum,0.0,18,8.997,5,1.0
+"cuts, 0.1 m per cut",15,window rule,1.5810249675906654,26,23.72128036504497,7,0.9265621383513596
+"cuts, 0.1 m per cut",15,window look-ahead,0.0,25,21.72888745030457,6,1.0
+"cuts, 0.3 m per cut",15,offline optimum,0.0,18,8.997,5,1.0
+"cuts, 0.3 m per cut",15,window rule,1.5810249675906654,26,23.72128036504497,7,0.9265621383513596
+"cuts, 0.3 m per cut",15,window look-ahead,0.7,23,20.178506696269856,6,0.9651559156113695
+offcut length,16,offline optimum,0.0,18,7.28,5,1.0
+offcut length,16,window rule,0.0,23,20.412421927394814,6,1.0
+offcut length,16,window look-ahead,0.0,24,24.156421927394806,6,1.0
+"cuts, 0.1 m per cut",16,offline optimum,0.0,18,7.279999999999999,5,1.0
+"cuts, 0.1 m per cut",16,window rule,0.0,26,21.059874643419576,7,1.0
+"cuts, 0.1 m per cut",16,window look-ahead,0.0,24,25.11696431183233,6,1.0
+"cuts, 0.3 m per cut",16,offline optimum,0.0,18,7.28,5,1.0
+"cuts, 0.3 m per cut",16,window rule,0.0,26,21.059874643419576,7,1.0
+"cuts, 0.3 m per cut",16,window look-ahead,0.0,24,26.584964311832334,6,1.0
+offcut length,17,offline optimum,0.0,23,11.289421927394812,6,1.0
+offcut length,17,window rule,3.521954445729289,19,24.318864777316534,6,0.8249881359226185
+offcut length,17,window look-ahead,1.4,21,17.996452716024763,6,0.9303951719587822
+"cuts, 0.1 m per cut",17,offline optimum,0.0,22,11.289421927394812,6,1.0
+"cuts, 0.1 m per cut",17,window rule,4.148528137423857,22,22.18627193907059,7,0.8074236932647296
+"cuts, 0.1 m per cut",17,window look-ahead,1.6,21,19.028833470059485,6,0.9204698898570689
+"cuts, 0.3 m per cut",17,offline optimum,1.2,16,9.382910331587249,6,0.9403699735107249
+"cuts, 0.3 m per cut",17,window rule,4.148528137423857,22,22.18627193907059,7,0.8074236932647296
+"cuts, 0.3 m per cut",17,window look-ahead,2.9000000000000004,17,20.082,5,0.8449197860962566
+offcut length,18,offline optimum,0.0,20,7.9449999999999985,5,1.0
+offcut length,18,window rule,0.6,28,17.366820663174497,7,0.9721554201577203
+offcut length,18,window look-ahead,0.0,21,12.309000000000001,5,1.0
+"cuts, 0.1 m per cut",18,offline optimum,0.0,20,7.944999999999999,5,1.0
+"cuts, 0.1 m per cut",18,window rule,0.0,29,16.90774380164674,7,1.0
+"cuts, 0.1 m per cut",18,window look-ahead,0.0,21,11.626999999999999,5,1.0
+"cuts, 0.3 m per cut",18,offline optimum,0.0,20,7.944999999999999,5,1.0
+"cuts, 0.3 m per cut",18,window rule,0.0,29,16.90774380164674,7,1.0
+"cuts, 0.3 m per cut",18,window look-ahead,0.0,21,11.901,5,1.0
+offcut length,19,offline optimum,0.0,19,5.846999999999999,5,1.0
+offcut length,19,window rule,0.0,24,14.739421927394812,6,1.0
+offcut length,19,window look-ahead,0.0,19,11.547,5,1.0
+"cuts, 0.1 m per cut",19,offline optimum,0.0,18,6.808999999999998,5,1.0
+"cuts, 0.1 m per cut",19,window rule,0.0,24,14.73942192739481,6,1.0
+"cuts, 0.1 m per cut",19,window look-ahead,0.0,19,10.556000000000001,5,1.0
+"cuts, 0.3 m per cut",19,offline optimum,0.0,18,6.808999999999999,5,1.0
+"cuts, 0.3 m per cut",19,window rule,0.0,24,14.73942192739481,6,1.0
+"cuts, 0.3 m per cut",19,window look-ahead,0.0,20,11.546999999999997,5,1.0
+offcut length,20,offline optimum,0.7,18,11.67,5,0.9625668449197861
+offcut length,20,window rule,3.221110255092798,23,24.80172321496669,7,0.850600536572095
+offcut length,20,window look-ahead,2.5999999999999996,21,24.2380411733601,6,0.8706851027390416
+"cuts, 0.1 m per cut",20,offline optimum,0.7,18,11.669999999999998,5,0.9625668449197861
+"cuts, 0.1 m per cut",20,window rule,4.402135222683463,25,20.675116129707085,8,0.8085613582278758
+"cuts, 0.1 m per cut",20,window look-ahead,1.2999999999999998,23,21.308910331587253,6,0.9354008046366187
+"cuts, 0.3 m per cut",20,offline optimum,0.7,18,11.670000000000002,5,0.9625668449197861
+"cuts, 0.3 m per cut",20,window rule,4.402135222683463,25,20.675116129707085,8,0.8085613582278758
+"cuts, 0.3 m per cut",20,window look-ahead,0.7,19,21.547000000000004,5,0.9625668449197861
+offcut length,21,offline optimum,0.0,21,13.105999999999996,5,1.0
+offcut length,21,window rule,1.2999999999999998,27,23.23168982140165,7,0.9397207964999931
+offcut length,21,window look-ahead,0.0,25,24.62383347005948,6,1.0
+"cuts, 0.1 m per cut",21,offline optimum,0.0,20,13.106000000000002,5,1.0
+"cuts, 0.1 m per cut",21,window rule,2.2,30,21.5196001529889,8,0.9043078843934933
+"cuts, 0.1 m per cut",21,window look-ahead,0.9,20,20.079999999999995,5,0.9518716577540107
+"cuts, 0.3 m per cut",21,offline optimum,0.0,20,13.105999999999998,5,1.0
+"cuts, 0.3 m per cut",21,window rule,2.2,30,21.5196001529889,8,0.9043078843934933
+"cuts, 0.3 m per cut",21,window look-ahead,0.0,20,21.229999999999997,5,1.0
+offcut length,22,offline optimum,0.0,23,9.502779489814403,6,1.0
+offcut length,22,window rule,0.0,32,23.8903924496883,8,1.0
+offcut length,22,window look-ahead,0.0,29,20.491743801646745,7,1.0
+"cuts, 0.1 m per cut",22,offline optimum,0.0,18,10.965,5,1.0
+"cuts, 0.1 m per cut",22,window rule,0.0,33,24.410034887268715,8,1.0
+"cuts, 0.1 m per cut",22,window look-ahead,0.0,24,18.04391033158725,6,1.0
+"cuts, 0.3 m per cut",22,offline optimum,0.0,18,10.965,5,1.0
+"cuts, 0.3 m per cut",22,window rule,0.0,33,24.410034887268715,8,1.0
+"cuts, 0.3 m per cut",22,window look-ahead,0.0,29,20.205743801646737,7,1.0
+offcut length,23,offline optimum,0.5,24,14.568779489814402,6,0.9751765203966882
+offcut length,23,window rule,3.5485281374238573,20,27.51995006481867,6,0.8235491727481621
+offcut length,23,window look-ahead,0.9,20,26.281999999999996,5,0.9518716577540107
+"cuts, 0.1 m per cut",23,offline optimum,0.5,21,16.57791033158725,6,0.9751541556294687
+"cuts, 0.1 m per cut",23,window rule,3.2,28,24.824523291461144,8,0.8607755990889633
+"cuts, 0.1 m per cut",23,window look-ahead,0.9,20,26.281999999999993,5,0.9518716577540107
+"cuts, 0.3 m per cut",23,offline optimum,0.9,19,14.455000000000004,5,0.9518716577540107
+"cuts, 0.3 m per cut",23,window rule,3.2,28,24.824523291461144,8,0.8607755990889633
+"cuts, 0.3 m per cut",23,window look-ahead,0.9,20,26.281999999999993,5,0.9518716577540107
+offcut length,24,offline optimum,0.0,23,9.848779489814405,6,1.0
+offcut length,24,window rule,0.6,27,25.290201417209218,7,0.9721613878728917
+offcut length,24,window look-ahead,1.1,19,19.043,5,0.9411764705882353
+"cuts, 0.1 m per cut",24,offline optimum,0.0,22,10.892910331587245,6,1.0
+"cuts, 0.1 m per cut",24,window rule,0.948528137423857,27,22.32578353487816,7,0.9559413168331378
+"cuts, 0.1 m per cut",24,window look-ahead,1.0219544457292888,22,19.46640716175406,6,0.9491907403850391
+"cuts, 0.3 m per cut",24,offline optimum,0.9,18,8.481,5,0.9518716577540107
+"cuts, 0.3 m per cut",24,window rule,0.948528137423857,27,22.32578353487816,7,0.9559413168331378
+"cuts, 0.3 m per cut",24,window look-ahead,0.0,24,22.817779489814402,6,1.0
+offcut length,25,offline optimum,0.0,19,9.388,5,1.0
+offcut length,25,window rule,0.0,24,19.96491033158725,6,1.0
+offcut length,25,window look-ahead,0.0,23,21.183452716024767,6,1.0
+"cuts, 0.1 m per cut",25,offline optimum,0.0,18,9.388,5,1.0
+"cuts, 0.1 m per cut",25,window rule,0.0,27,22.90855897962881,7,1.0
+"cuts, 0.1 m per cut",25,window look-ahead,0.0,18,13.081000000000001,5,1.0
+"cuts, 0.3 m per cut",25,offline optimum,0.0,18,9.388000000000002,5,1.0
+"cuts, 0.3 m per cut",25,window rule,0.0,27,22.90855897962881,7,1.0
+"cuts, 0.3 m per cut",25,window look-ahead,0.0,18,12.559,5,1.0
+offcut length,26,offline optimum,0.0,19,7.5619999999999985,5,1.0
+offcut length,26,window rule,0.8,22,14.60458355779761,6,0.9601899267775352
+offcut length,26,window look-ahead,0.0,20,13.125999999999998,5,1.0
+"cuts, 0.1 m per cut",26,offline optimum,0.0,19,7.562000000000001,5,1.0
+"cuts, 0.1 m per cut",26,window rule,0.0,26,19.933363047612016,7,1.0
+"cuts, 0.1 m per cut",26,window look-ahead,0.0,20,13.987,5,1.0
+"cuts, 0.3 m per cut",26,offline optimum,0.0,19,7.561999999999999,5,1.0
+"cuts, 0.3 m per cut",26,window rule,0.0,26,19.933363047612016,7,1.0
+"cuts, 0.3 m per cut",26,window look-ahead,0.0,21,15.386,5,1.0
+offcut length,27,offline optimum,0.0,18,7.045999999999999,5,1.0
+offcut length,27,window rule,0.0,29,20.589743801646737,7,1.0
+offcut length,27,window look-ahead,0.0,20,11.628,5,1.0
+"cuts, 0.1 m per cut",27,offline optimum,0.0,17,7.046,5,1.0
+"cuts, 0.1 m per cut",27,window rule,0.0,28,19.312797781891824,7,1.0
+"cuts, 0.1 m per cut",27,window look-ahead,0.0,23,16.07291033158725,6,1.0
+"cuts, 0.3 m per cut",27,offline optimum,0.0,17,7.046,5,1.0
+"cuts, 0.3 m per cut",27,window rule,0.0,28,19.312797781891824,7,1.0
+"cuts, 0.3 m per cut",27,window look-ahead,0.0,20,16.348999999999997,5,1.0
+offcut length,28,offline optimum,0.0,20,10.417000000000002,5,1.0
+offcut length,28,window rule,1.5219544457292888,22,27.957026407719333,6,0.9243144914113529
+offcut length,28,window look-ahead,0.0,25,24.50742192739481,6,1.0
+"cuts, 0.1 m per cut",28,offline optimum,0.0,20,10.417000000000002,5,1.0
+"cuts, 0.1 m per cut",28,window rule,1.5,30,24.93352329146114,8,0.9347385620729516
+"cuts, 0.1 m per cut",28,window look-ahead,0.7000000000000001,24,23.112964311832332,6,0.9651741911875276
+"cuts, 0.3 m per cut",28,offline optimum,0.0,20,10.417,5,1.0
+"cuts, 0.3 m per cut",28,window rule,1.5,30,24.93352329146114,8,0.9347385620729516
+"cuts, 0.3 m per cut",28,window look-ahead,0.0,24,27.984452716024766,6,1.0
+offcut length,29,offline optimum,1.0,23,11.981779489814405,6,0.9503530407933765
+offcut length,29,window rule,4.381024967590665,23,29.2457687692374,7,0.7966310990245506
+offcut length,29,window look-ahead,2.4810249675906655,22,25.944446894985475,6,0.8766308477740706
+"cuts, 0.1 m per cut",29,offline optimum,1.1,20,13.39991033158725,6,0.9453391423848312
+"cuts, 0.1 m per cut",29,window rule,2.8000000000000003,21,26.260452716024766,6,0.8607903439175644
+"cuts, 0.1 m per cut",29,window look-ahead,2.9219544457292885,21,17.573864777316537,6,0.8548031491672561
+"cuts, 0.3 m per cut",29,offline optimum,1.6,18,10.421999999999997,5,0.9144385026737968
+"cuts, 0.3 m per cut",29,window rule,2.8000000000000003,21,26.260452716024766,6,0.8607903439175644
+"cuts, 0.3 m per cut",29,window look-ahead,2.0810249675906656,22,21.366446894985476,6,0.8965208777153225
+offcut length,30,offline optimum,0.5,23,13.861779489814406,6,0.9751765203966882
+offcut length,30,window rule,2.921110255092798,25,23.81485405673954,7,0.8644009138041866
+offcut length,30,window look-ahead,2.4810249675906655,22,26.906446894985482,6,0.8766308477740707
+"cuts, 0.1 m per cut",30,offline optimum,0.5,21,13.933779489814404,6,0.9751765203966882
+"cuts, 0.1 m per cut",30,window rule,4.369638392516655,27,24.712084822450034,8,0.8098384052245641
+"cuts, 0.1 m per cut",30,window look-ahead,1.7219544457292888,23,27.35586477731654,6,0.9144331756565313
+"cuts, 0.3 m per cut",30,offline optimum,1.4,18,12.965,5,0.9251336898395722
+"cuts, 0.3 m per cut",30,window rule,4.369638392516655,27,24.712084822450034,8,0.8098384052245641
+"cuts, 0.3 m per cut",30,window look-ahead,2.221954445729289,21,27.397864777316542,6,0.8895873312859999
+offcut length,31,offline optimum,0.0,21,9.646000000000003,5,1.0
+offcut length,31,window rule,1.6810249675906654,23,22.064989279423003,6,0.9163670655281355
+offcut length,31,window look-ahead,0.9,20,11.180000000000003,5,0.9518716577540107
+"cuts, 0.1 m per cut",31,offline optimum,0.0,21,9.646000000000003,5,1.0
+"cuts, 0.1 m per cut",31,window rule,1.5219544457292888,29,21.153423756945344,8,0.9338526016147914
+"cuts, 0.1 m per cut",31,window look-ahead,0.8810249675906654,24,19.139446894985475,6,0.9561909675390781
+"cuts, 0.3 m per cut",31,offline optimum,0.0,21,9.646,5,1.0
+"cuts, 0.3 m per cut",31,window rule,1.5219544457292888,29,21.153423756945344,8,0.9338526016147914
+"cuts, 0.3 m per cut",31,window look-ahead,0.8,23,14.811910331587253,6,0.96024664900715
+offcut length,32,offline optimum,0.0,24,10.766779489814404,6,1.0
+offcut length,32,window rule,0.0,28,25.139820663174497,7,1.0
+offcut length,32,window look-ahead,0.0,23,16.54991033158725,6,1.0
+"cuts, 0.1 m per cut",32,offline optimum,0.0,19,11.261000000000001,5,1.0
+"cuts, 0.1 m per cut",32,window rule,0.0,29,21.219201417209216,7,1.0
+"cuts, 0.1 m per cut",32,window look-ahead,0.0,25,19.846910331587246,6,1.0
+"cuts, 0.3 m per cut",32,offline optimum,0.0,19,11.261,5,1.0
+"cuts, 0.3 m per cut",32,window rule,0.0,29,21.219201417209216,7,1.0
+"cuts, 0.3 m per cut",32,window look-ahead,0.0,24,17.551910331587244,6,1.0
+offcut length,33,offline optimum,0.0,21,8.903,5,1.0
+offcut length,33,window rule,2.1219544457292887,26,20.869698247376025,7,0.90149804058632
+offcut length,33,window look-ahead,1.6219544457292887,23,16.636995619089376,6,0.9193296644186778
+"cuts, 0.1 m per cut",33,offline optimum,0.0,20,10.112000000000002,5,1.0
+"cuts, 0.1 m per cut",33,window rule,2.148528137423857,25,18.42914109729775,7,0.9003483502673109
+"cuts, 0.1 m per cut",33,window look-ahead,2.2219544457292892,25,20.969698247376027,7,0.8968560012809085
+"cuts, 0.3 m per cut",33,offline optimum,0.0,20,10.112,5,1.0
+"cuts, 0.3 m per cut",33,window rule,2.148528137423857,25,18.42914109729775,7,0.9003483502673109
+"cuts, 0.3 m per cut",33,window look-ahead,1.5810249675906656,21,16.088446894985477,6,0.9213834151418874
+offcut length,34,offline optimum,0.0,25,14.509779489814402,6,1.0
+offcut length,34,window rule,2.221954445729289,25,22.26864426713094,7,0.8969710429216455
+offcut length,34,window look-ahead,1.9999999999999998,22,20.483041173360093,6,0.9005270021069551
+"cuts, 0.1 m per cut",34,offline optimum,0.0,24,14.689910331587246,6,1.0
+"cuts, 0.1 m per cut",34,window rule,2.5485281374238573,21,23.809980853448625,6,0.8732929551688623
+"cuts, 0.1 m per cut",34,window look-ahead,1.5810249675906654,23,18.881935299177904,6,0.9214361994186361
+"cuts, 0.3 m per cut",34,offline optimum,0.9,20,12.514000000000001,5,0.9518716577540107
+"cuts, 0.3 m per cut",34,window rule,2.5485281374238573,21,23.809980853448625,6,0.8732929551688623
+"cuts, 0.3 m per cut",34,window look-ahead,2.181024967590665,22,24.791066140950768,6,0.8915234539970877
+offcut length,35,offline optimum,0.0,21,9.713,5,1.0
+offcut length,35,window rule,0.5,28,25.320232205839176,7,0.9768043520984929
+offcut length,35,window look-ahead,0.0,21,14.235,5,1.0
+"cuts, 0.1 m per cut",35,offline optimum,0.0,21,9.713,5,1.0
+"cuts, 0.1 m per cut",35,window rule,0.7,32,28.554523291461145,8,0.9695446623007107
+"cuts, 0.1 m per cut",35,window look-ahead,0.0,25,19.581421927394814,6,1.0
+"cuts, 0.3 m per cut",35,offline optimum,0.0,21,9.713000000000001,5,1.0
+"cuts, 0.3 m per cut",35,window rule,0.7,32,28.554523291461145,8,0.9695446623007107
+"cuts, 0.3 m per cut",35,window look-ahead,0.0,21,15.706000000000003,5,1.0
+offcut length,36,offline optimum,0.0,21,9.117,5,1.0
+offcut length,36,window rule,0.0,27,20.400743801646737,7,1.0
+offcut length,36,window look-ahead,0.0,23,15.587041173360095,6,1.0
+"cuts, 0.1 m per cut",36,offline optimum,0.0,21,9.116999999999999,5,1.0
+"cuts, 0.1 m per cut",36,window rule,0.0,27,19.942689821401654,7,1.0
+"cuts, 0.1 m per cut",36,window look-ahead,0.0,24,17.041583557797615,6,1.0
+"cuts, 0.3 m per cut",36,offline optimum,0.0,21,9.117,5,1.0
+"cuts, 0.3 m per cut",36,window rule,0.0,27,19.942689821401654,7,1.0
+"cuts, 0.3 m per cut",36,window look-ahead,0.0,23,15.393041173360094,6,1.0
+offcut length,37,offline optimum,0.0,24,7.380779489814404,6,1.0
+offcut length,37,window rule,2.821954445729289,20,29.62786477731654,6,0.8597723180413623
+offcut length,37,window look-ahead,0.7,22,24.051421927394813,6,0.9651924476028093
+"cuts, 0.1 m per cut",37,offline optimum,0.0,19,10.967583557797608,6,1.0
+"cuts, 0.1 m per cut",37,window rule,0.5,27,20.0188206631745,7,0.9767961834647669
+"cuts, 0.1 m per cut",37,window look-ahead,1.1,18,19.508,5,0.9411764705882353
+"cuts, 0.3 m per cut",37,offline optimum,0.0,19,10.967583557797608,6,1.0
+"cuts, 0.3 m per cut",37,window rule,0.5,27,20.0188206631745,7,0.9767961834647669
+"cuts, 0.3 m per cut",37,window look-ahead,0.9,19,17.598000000000003,5,0.9518716577540107
+offcut length,38,offline optimum,0.0,19,8.248999999999999,5,1.0
+offcut length,38,window rule,0.0,22,20.050887450304568,6,1.0
+offcut length,38,window look-ahead,0.0,24,21.668421927394814,6,1.0
+"cuts, 0.1 m per cut",38,offline optimum,0.0,18,8.71,5,1.0
+"cuts, 0.1 m per cut",38,window rule,0.0,26,21.238232205839168,7,1.0
+"cuts, 0.1 m per cut",38,window look-ahead,0.0,19,14.586999999999998,5,1.0
+"cuts, 0.3 m per cut",38,offline optimum,0.0,18,8.71,5,1.0
+"cuts, 0.3 m per cut",38,window rule,0.0,26,21.238232205839168,7,1.0
+"cuts, 0.3 m per cut",38,window look-ahead,0.0,18,17.02,5,1.0
+offcut length,39,offline optimum,0.5,21,9.129910331587245,6,0.9751541556294687
+offcut length,39,window rule,3.1211102550927983,22,28.996723214966693,7,0.8552386722332911
+offcut length,39,window look-ahead,1.4810249675906655,21,27.19544689498548,6,0.9263559226272002
+"cuts, 0.1 m per cut",39,offline optimum,0.7,15,8.637999999999998,5,0.9625668449197861
+"cuts, 0.1 m per cut",39,window rule,3.021954445729289,22,25.258317493341302,7,0.8596896004696453
+"cuts, 0.1 m per cut",39,window look-ahead,1.5219544457292888,21,27.397407161754053,6,0.9243318732274614
+"cuts, 0.3 m per cut",39,offline optimum,0.7,15,8.638,5,0.9625668449197861
+"cuts, 0.3 m per cut",39,window rule,3.021954445729289,22,25.258317493341302,7,0.8596896004696453
+"cuts, 0.3 m per cut",39,window look-ahead,1.1,16,20.096,5,0.9411764705882353

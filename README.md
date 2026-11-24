@@ -292,3 +292,34 @@ place. All strategies follow the same protocol. 60 batches per case.
   within the window, so the real gap to perfect knowledge is probably larger.
   The last 4 pieces at the end of the stream are assigned optimally for every
   strategy.
+
+### Minimising the number of cuts (`experiments/run_cuts.py`)
+
+Here a cut is counted when a piece is longer than its slot by more than 2 cm.
+The objective is new timber (m) + λ × cuts, compared with the offcut-length
+objective. Setup: open-geometry ladder, 5-piece window, random order, 40
+batches.
+
+| Objective | Strategy | New timber (m) | Cuts | Panels | Offcut (m) |
+|---|---|---|---|---|---|
+| Offcut length | Window rule | 1.58 | 24.2 | 6.6 | 22.8 |
+| | Window look-ahead | 0.91 | 21.5 | 5.6 | 19.8 |
+| | Offline optimum | 0.18 | 21.2 | 5.5 | 10.4 |
+| Cuts, λ = 0.1 m | Window rule | 1.60 | 26.0 | 7.1 | 22.0 |
+| | Window look-ahead | **0.78** | **21.9** | 5.7 | 19.7 |
+| | Offline optimum | 0.21 | 19.5 | 5.4 | 10.7 |
+| Cuts, λ = 0.3 m | Window rule | 1.60 | 26.0 | 7.1 | 22.0 |
+| | Window look-ahead | **0.77** | **21.0** | 5.5 | 19.9 |
+| | Offline optimum | 0.42 | 18.5 | 5.1 | 10.1 |
+
+- Almost every placement needs a cut, because exact fits within 2 cm are
+  rare. So the **number of cuts is mostly the number of members**, and fewer
+  members means fewer, wider panels: a *geometry* decision.
+- **The rule gets worse when told to avoid cuts** (26 cuts, against 24 with the
+  offcut objective). It avoids a cut now by opening a panel sized to the
+  current piece, which leads to more and narrower panels and so more members
+  and cuts later.
+- **Look-ahead improves on both measures:** about 4–5 fewer cuts and about
+  0.8 m less new timber than the rule (cuts: −5.1 ± 0.9 at λ = 0.3).
+- **There is a trade-off in the offline optimum:** fewer cuts (21.2 → 18.5)
+  cost more new timber (0.18 → 0.42 m).

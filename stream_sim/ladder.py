@@ -29,7 +29,7 @@ from functools import lru_cache
 
 import numpy as np
 
-from .model import WASTE_WEIGHT, Problem, assign, assign_cost, build_problem
+from .model import CUT_TOL, WASTE_WEIGHT, Problem, assign, assign_cost, build_problem
 from .structure import Slot
 
 UNIT = 0.1  # m per grid unit
@@ -49,7 +49,7 @@ class LadderSpec:
 class LadderCatalogue:
     """Every slot that could ever exist, so validity can be precomputed."""
 
-    def __init__(self, spec: LadderSpec, pieces):
+    def __init__(self, spec: LadderSpec, pieces, cut_cost: float | None = None):
         self.spec = spec
         S, H, q = spec.span_u * UNIT, spec.depth, spec.q_kN_m
         R = q * S / 2
@@ -91,7 +91,7 @@ class LadderCatalogue:
                     v * Ld / H if straddle else 0.0)
         self.slots = slots
         self.future: dict = {}
-        self.problem: Problem = build_problem(pieces, slots)
+        self.problem: Problem = build_problem(pieces, slots, cut_cost)
 
     def panel_slots(self, u0: int, w: int) -> dict:
         ix = self.index
@@ -155,6 +155,18 @@ def commit_options(cat: LadderCatalogue, st: LadderState, p: int):
             if pr.valid[p, sid]:
                 opts.append((w, role, sid))
     return opts
+
+
+def action_cost(cat: LadderCatalogue, st: LadderState, act) -> float:
+    """Objective cost of an action in the current state (before applying it)."""
+    pr = cat.problem
+    if act[0] == "place":
+        return float(pr.cost[act[1], act[2]])
+    if act[0] == "commit":
+        _, p, w, role = act
+        return float(pr.cost[p, cat.panel_slots(st.x, w)[role]])
+    p = act[1]
+    return WASTE_WEIGHT * pr.pieces[p].length if piece_has_use(cat, st, p) else 0.0
 
 
 def apply(cat: LadderCatalogue, st: LadderState, act) -> float:
@@ -301,7 +313,8 @@ def rollout(cat, st: LadderState, future) -> float:
         st.hand = [p]
         c = candidate_actions(cat, st, p)
         if c:
-            cost += WASTE_WEIGHT * apply(cat, st, c[0][1])
+            cost += action_cost(cat, st, c[0][1])
+            apply(cat, st, c[0][1])
     st.hand = hand
     return cost + assign_cost(pr, st.open, hand) + all_new_cost(cat, st.x)
 
@@ -362,7 +375,8 @@ class LadderLookAhead(LadderRule):
                 commits = [a for _, a in cands if a[0] == "commit"][: self.top_k]
                 for a in places + commits + [("discard", p)]:
                     s2 = st.copy()
-                    now = WASTE_WEIGHT * apply(cat, s2, a)
+                    now = action_cost(cat, s2, a)
+                    apply(cat, s2, a)
                     val = now + float(np.mean([rollout(cat, s2, sc) for sc in scen]))
                     if val < best_val - 1e-9:
                         best, best_val = a, val
@@ -381,6 +395,7 @@ class LadderResult:
     waste_m: float
     panels: list
     total_length_m: float
+    cuts: int = 0
 
 
 def run_ladder_episode(cat: LadderCatalogue, stream, policy, buffer_size: int,
@@ -389,13 +404,16 @@ def run_ladder_episode(cat: LadderCatalogue, stream, policy, buffer_size: int,
     policy.reset(cat, buffer_size, rng)
     st = LadderState(open=[cat.index[("V", 0)]])
     waste = 0.0
+    cuts = 0
     stream = [int(p) for p in stream]
     for t, p in enumerate(stream):
         if st.x >= cat.spec.span_u and not st.open:
             break
         st.hand.append(p)
         for a in policy.act(st.copy(), len(stream) - t - 1):
-            waste += apply(cat, st, a)
+            wa = apply(cat, st, a)
+            waste += wa
+            cuts += int(a[0] != "discard" and wa > CUT_TOL)
         if len(st.hand) > buffer_size:
             raise RuntimeError(f"{policy.name} exceeded the buffer")
     _, new_m, rest = completion(cat, st)
@@ -403,11 +421,12 @@ def run_ladder_episode(cat: LadderCatalogue, stream, policy, buffer_size: int,
     slots = st.open + cat.layout_slots(st.x, rest)
     _, pairs = assign(cat.problem, slots, st.hand)
     waste += sum(cat.problem.waste[st.hand[a], slots[b]] for a, b in pairs)
+    cuts += sum(int(cat.problem.waste[st.hand[a], slots[b]] > CUT_TOL) for a, b in pairs)
     widths = [w for _, w in st.panels] + rest
     total = float(cat.problem.new_cost[cat.layout_slots(0, widths)].sum()
                   + cat.problem.new_cost[cat.index[("V", 0)]])
     return LadderResult(policy.name, new_m, 1 - new_m / total, float(waste),
-                        [w * UNIT for w in widths], total)
+                        [w * UNIT for w in widths], total, cuts)
 
 
 def ladder_offline(cat: LadderCatalogue, batch) -> LadderResult:
@@ -426,6 +445,7 @@ def ladder_offline(cat: LadderCatalogue, batch) -> LadderResult:
     filled = {slots[s] for _, s in pairs}
     new_m = float(sum(pr.new_cost[s] for s in slots if s not in filled))
     waste = float(sum(pr.waste[batch[a], slots[b]] for a, b in pairs))
+    cuts = sum(int(pr.waste[batch[a], slots[b]] > CUT_TOL) for a, b in pairs)
     total = float(pr.new_cost[slots].sum())
     return LadderResult("offline optimum", new_m, 1 - new_m / total, waste,
-                        [w * UNIT for w in comp], total)
+                        [w * UNIT for w in comp], total, cuts)

@@ -1,0 +1,9 @@
+inventory: synthetic (400 pieces, seed 1)
+n_main: 60
+n_sweep: 40
+scenarios: 16, top_k: 3
+order: random
+buffer: 3
+best_fraction: 0.15
+batch_size: 45
+spec: span 4.0 m, depth 0.6 m, panel widths 0.4-0.8 m, q 8 kN/m, max 2 open panels

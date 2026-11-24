@@ -99,13 +99,72 @@ leaves out. These are the next steps:
 - **Build-order and buffer constraints during assembly.**
 - **Real MZ/WI inventory data** and agreed structural values.
 
+## v2: open geometry (`stream_sim/ladder.py`)
+
+This version adds open geometry. The **design intent** is fixed in advance: a 4.0 m
+span, 0.6 m depth, a line load of 8 kN/m, and panel widths between 0.4 and 0.8 m.
+The **geometry** emerges while building: how many panels there are and how wide
+each one is. The truss grows from the left support and must close exactly at the
+right one, with at most 2 unfinished panels at a time.
+
+When a piece arrives, the options are:
+- place it in an open slot
+- **open the next panel with a width chosen for this piece**, placing it as that
+  panel's chord, diagonal or vertical
+- keep it in the buffer
+- discard it
+
+Member demands come from a conservative beam analogy (M/h for chords, V·L/h for
+diagonals) that doesn't need the final geometry. A test checks that it bounds the
+method-of-joints forces on 300 random layouts.
+
+The **offline optimum is exact**: it tries all 14,063 layouts, each with an exact
+assignment. A **fixed design** (8 × 0.5 m, chosen in advance) runs on the same
+streams for comparison.
+
+Results: synthetic inventory, 45 pieces per batch, buffer 3, 15 % best class,
+60 streams. New timber is in metres per component, out of about 22 m of members.
+
+| | Fixed design · rule | Fixed · look-ahead | Open · greedy rule | Open · buffered rule | **Open · look-ahead** | Open · offline optimum |
+|---|---|---|---|---|---|---|
+| Random order | 3.25 | 1.05 | 2.25 | 1.24 | **0.57** | 0.11 |
+| Batch order | 6.57 | 3.18 | 3.27 | 2.28 | **1.41** | 0.11 |
+
+![ladder](results/ladder/fig_ladder_main.png)
+
+What changes compared with v1:
+
+1. **With open geometry, rules are no longer enough.** Look-ahead needs about
+   4× less new timber than the greedy rule. Over the greedy rule, it saves
+   1.68 ± 0.48 m (random order) and 1.87 ± 0.43 m (batch order), and it is
+   better in 39 and 53 of 60 streams and worse in 1 and 2. It also halves the
+   new timber of the buffered rule.
+2. **Open geometry beats a fixed design.** The same strategy needs less new
+   timber when the panel widths can adapt, especially with batch arrivals:
+   6.6 m → 3.3 m for the rule.
+3. **The advantage holds under scarcity and different supply volumes.** See
+   `fig_ladder_scarcity.png` and `fig_ladder_supply.png`.
+4. **A gap to full foreknowledge remains** (0.57 m against 0.11 m). That gap is
+   what better supply models, larger buffers or human hints could recover.
+
+Caveats:
+- The data is synthetic and the structural values are placeholders.
+- The look-ahead uses the greedy rule as its base policy, so improving on that
+  rule is expected. The size of the improvement is the finding.
+- A cleverer hand-designed geometry rule might close part of the gap. Look-ahead
+  needs no such rule for each design family.
+- The offline optimum ignores build order and storage, so it is a loose bound.
+
+Run it with `python experiments/run_ladder.py` (~8 min on 2 cores), then
+`python experiments/make_ladder_figures.py`. Results go to `results/ladder/`.
+
 ### Run it
 
 Requirements: Python ≥ 3.10, numpy, scipy, matplotlib, pandas, and pytest for
 the tests.
 
 ```bash
-python -m pytest                              # 16 tests
+python -m pytest                              # 21 tests
 python experiments/run_experiments.py         # ~3 min on 2 cores -> results/runs.csv
 python experiments/make_figures.py            # figures + results/summary.md
 python experiments/run_experiments.py --inventory data/mz_wi.json   # real inventory
@@ -124,6 +183,7 @@ stream_sim/inventory.py   pieces, synthetic inventory, JSON loader, stream order
 stream_sim/model.py       piece-slot validity, exact assignment oracle
 stream_sim/policies.py    greedy, rules, look-ahead (rollout / hindsight)
 stream_sim/simulator.py   online episode, offline bound
+stream_sim/ladder.py      v2: open geometry (emergent panel widths)
 experiments/              experiment runner and figures
 results/                  CSV, summary, figures (synthetic)
 tests/                    unit and integration tests

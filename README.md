@@ -374,3 +374,47 @@ What this shows:
 - **The geometry goes to its limits:** nodes regularly move the full 35 cm
   (the box corner), and the grid becomes visibly irregular (see the drawing).
   How much freedom is architecturally acceptable is a Part A question.
+
+## Real inventory: 2 × 2 m panel (`experiments/run_real_frame.py`)
+
+Data: `data/mz_wi_inventory.json`, 80 labelled boards measured with the camera.
+All are 30 mm thick, 75–192 mm wide and 0.35–1.35 m long (median 0.52 m; only
+16 boards are ≥ 0.6 m and 5 are ≥ 0.81 m). There are no quality grades, so all
+boards are taken as "standard".
+
+Panel: 2 × 2 m on a 4 × 4 grid of 0.5 m cells with diagonals (56 members).
+Supports at the two bottom corners; 6 kN on each top node and 2 kN on each
+left-edge node (placeholders: structure limits a few members for the narrow
+boards). One stream = all 80 boards in random order; 5-piece window; 20 orders.
+Node freedom: fixed, ±5, ±10, ±15 cm.
+
+| Node freedom | Rule | Look-ahead (learned supply) | Look-ahead (knows inventory statistics) | Offline plan |
+|---|---|---|---|---|
+| Fixed design | 28.8 % | 28.8 % | 28.8 % | 28.8 % |
+| ±5 cm | 57.9 % | 58.4 % | 59.0 % | 62.7 % |
+| ±10 cm | 58.3 % | 61.8 % | 63.7 % | 68.3 % |
+| ±15 cm | 61.7 % | 64.6 % | 66.5 % | 71.4 % |
+
+(Reclaimed share of total member length. 0 structural violations in all 320 runs.)
+
+![real freedom](results/real_frame/fig_real_freedom.png)
+![real example](results/real_frame/fig_real_example.png)
+
+- **Fixed design:** only 29 % reclaimed, and the strategy makes no difference.
+  Most boards are shorter than the 0.6 m a 0.5 m member needs with joints, so
+  every usable board gets used.
+- **Letting nodes move ±5 cm roughly doubles the reclaimed share (58–63 %).**
+  More freedom adds a little more (up to 62–71 % at ±15 cm).
+- **Planning matters once the freedom is large enough.** At ±10 cm, look-ahead
+  that learns the supply from the boards it has seen saves 1.33 ± 0.39 m of new
+  timber over the rule (better in 19 of 20 orders). Knowing the inventory
+  statistics saves 2.02 ± 0.45 m (20 of 20). At ±5 cm the gain is small and not
+  significant.
+- **The offline plan is still about 5 percentage points higher, and it cuts
+  far fewer boards** (about 9 against 11–14 cuts), the same coordination gap as
+  in the synthetic panel.
+- **Caveats:** the joint allowance (2 × 5 cm per member) is large compared with
+  0.5 m members and drives the fixed-design result. The "inventory statistics"
+  variant samples from exactly these 80 boards, which is an optimistic supply
+  model; the learned-supply variant is the honest one. No quality grades, and
+  the loads and capacities are placeholders.

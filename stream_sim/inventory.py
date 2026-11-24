@@ -67,9 +67,11 @@ def load_inventory_json(path: str | Path) -> list[Piece]:
     Recognised keys (first match wins, case-insensitive):
       id:      id, label, name
       length:  length_m, length (m, or mm if > 20), length_mm
-      b, h:    width/thickness/b and height/depth/h (mm), or section "40x60"
+      b, h:    the first two of width, thickness, height, depth, b, h (mm),
+               or section "40x60"
       quality: quality / class / grade as reject|standard|best or 0|1|2
       source:  source, batch, series (default: the id prefix, e.g. "MZ")
+    Missing quality is taken as "standard".
     """
     data = json.loads(Path(path).read_text())
     if isinstance(data, dict):
@@ -87,8 +89,11 @@ def load_inventory_json(path: str | Path) -> list[Piece]:
         if "section" in r:
             b, h = (float(x) for x in str(r["section"]).lower().split("x"))
         else:
-            b = float(_first(r, ["width", "thickness", "b"]))
-            h = float(_first(r, ["height", "depth", "h"]))
+            dims = [float(r[k]) for k in ("width", "thickness", "height", "depth", "b", "h")
+                    if k in r and r[k] is not None]
+            if len(dims) < 2:
+                raise KeyError(f"need two cross-section dimensions in record {r}")
+            b, h = dims[0], dims[1]
         q = _first(r, ["quality", "class", "grade"], "standard")
         q = QUALITY_CODES[q.lower()] if isinstance(q, str) else int(q)
         src = str(_first(r, ["source", "batch", "series"], pid.split("-")[0][:2]))

@@ -341,17 +341,32 @@ def rollout(fm, st, future, horizon):
 
 
 class FrameLookAhead(FrameWindowRule):
+    """supply="source": futures sampled from the inventory statistics;
+    supply="observed": futures bootstrapped from pieces seen so far."""
     name = "window look-ahead"
 
-    def __init__(self, n_scenarios=6, top_k=2, horizon=30):
-        self.n_scenarios, self.top_k, self.horizon = n_scenarios, top_k, horizon
+    def __init__(self, n_scenarios=6, top_k=2, horizon=30, supply="source"):
+        self.n_scenarios, self.top_k, self.horizon, self.supply = n_scenarios, top_k, horizon, supply
+        if supply == "observed":
+            self.name = "window look-ahead (learned supply)"
+
+    def reset(self, fm, B, rng):
+        super().reset(fm, B, rng)
+        self.seen = []
+
+    def _scenario(self, n):
+        if self.supply == "observed" and len(self.seen) >= 5:
+            pool = np.array(self.seen)
+            return pool[self.rng.integers(0, len(pool), n)]
+        return self.rng.integers(0, len(self.fm.pieces), n)
 
     def act(self, st, remaining):
         fm = self.fm
         st = st.copy()
+        self.seen.append(st.hand[-1])
         acts = []
         while len(st.hand) > self.B:
-            scen = [self.rng.integers(0, len(fm.pieces), remaining) for _ in range(self.n_scenarios)]
+            scen = [self._scenario(remaining) for _ in range(self.n_scenarios)]
             best, best_val = None, np.inf
             for p in st.hand:
                 cand = [(a, w) for _, a, w in options(fm, st, p, two_choices=True)[: self.top_k + 1]]

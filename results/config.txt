@@ -1,0 +1,9 @@
+inventory: synthetic (400 pieces, seed 1)
+n_main: 100
+n_sweep: 60
+scenarios: 16
+order: random
+buffer: 3
+best_fraction: 0.15
+supply_ratio: 1.5
+node_load: 4.5

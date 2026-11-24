@@ -323,3 +323,54 @@ batches.
   0.8 m less new timber than the rule (cuts: −5.1 ± 0.9 at λ = 0.3).
 - **There is a trade-off in the offline optimum:** fewer cuts (21.2 → 18.5)
   cost more new timber (0.18 → 0.42 m).
+
+## v3: 4 × 4 m panel with floating nodes (`stream_sim/frame.py`)
+
+- **Intent:** a 4 × 4 m in-plane wall panel on a 4 × 4 grid of 1 m cells with
+  one diagonal each (fixed topology, 25 nodes, 56 members). Supports at the two
+  bottom corners; 6 kN on each top node and 2 kN horizontal on each left-edge
+  node.
+- **Floating nodes:** corners are fixed. Edge nodes slide ±25 cm along their
+  edge, and interior nodes move ±25 cm in x and y, on a 5 cm grid. A member can
+  be built once one of its nodes is placed. If the other node is not placed
+  yet, the piece decides where it goes, so the member fits the piece.
+- **Structure:** a stiffness solver (the panel is statically indeterminate).
+  Demand envelopes come from 300 random layouts × 1.05, and each finished panel
+  is re-checked on its actual geometry: **0 violations in all 360 runs**.
+- **Comparison:** fixed nodes (the design decided before fabrication) under the
+  same 5-piece window, 30 streams per case. The offline plan is exact for fixed
+  nodes and a heuristic local search for floating nodes (not a bound).
+
+| Pieces | Design | Strategy | New timber (m) | Cuts | Offcut (m) |
+|---|---|---|---|---|---|
+| 84 | fixed nodes | rule / look-ahead / offline | 15.5 (all equal) | 40 | 17.7 |
+| 84 | floating nodes | rule | 1.12 | 37.2 | 11.9 |
+| 84 | floating nodes | **look-ahead** | **0.49** | 37.2 | 10.4 |
+| 84 | floating nodes | offline plan | 0.04 | 31.1 | 4.4 |
+| 140 | fixed nodes | rule / look-ahead / offline | 0 | 55 / 55 / 54 | 27.9 / 23.3 / 17.2 |
+| 140 | floating nodes | rule / look-ahead | 0 | 37.0 / 36.1 | 13.9 / 10.0 |
+| 140 | floating nodes | offline plan | 0 | **9.2** | **0.6** |
+
+![frame example](results/frame/fig_frame_example.png)
+![frame metrics](results/frame/fig_frame_metrics.png)
+
+What this shows:
+- **Floating nodes change the outcome much more than any decision strategy.**
+  With 84 pieces, fixed nodes need 15.5 m of new timber (77 % reclaimed),
+  whatever the strategy, because only the pieces long enough for 1.1–1.5 m
+  members are usable. Floating nodes need 0.5–1.1 m (99 % reclaimed). Most of
+  the gain comes from members that can become shorter, so shorter pieces become
+  usable. That depends on the ±25 cm freedom and on the inventory's lengths.
+- **Look-ahead improves on the rule with floating nodes:** −0.63 ± 0.40 m of new
+  timber (84 pieces) and −1.5 to −3.9 m of offcut. It does **not** reduce cuts
+  (about 36–37 for both).
+- **Big unrealised potential in cuts:** a coordinated plan cuts only 9 of 56
+  members (140 pieces), but both online strategies cut about 36. Fitting one
+  node to one piece fixes the lengths of that node's other members, which then
+  need cuts. Only a plan that coordinates the whole node neighbourhood avoids
+  this. That's a clear target for stronger planning or learning.
+- With fixed nodes and scarce supply, all strategies are identical: every
+  usable piece gets used, so there is nothing to decide.
+- **The geometry goes to its limits:** nodes regularly move the full 35 cm
+  (the box corner), and the grid becomes visibly irregular (see the drawing).
+  How much freedom is architecturally acceptable is a Part A question.
